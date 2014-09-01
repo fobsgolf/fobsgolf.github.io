@@ -1,7 +1,27 @@
 <div class="container">
     <div ng-repeat="cardInfo in scores">
-        <div>{{cardInfo.name}}</div>
-        <div>{{cardInfo.date}}</div>
+        <h2>{{cardInfo.name}}</h2>
+        <h3v>{{cardInfo.date * 1000| date:'dd-MM-yyyy HH:mm:ss Z'}}</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Hole</th>
+                    <th>Par</th>
+                    <th>Index</th>
+                    <th ng-repeat="player in playersList.names">{{player}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="score in cardInfo.score | orderBy:getScoreOrder">
+                    <td>{{getHole(score)}}</td>
+                    <td>{{getPar(score)}}</td>
+                    <td>{{getIndex(score)}}</td>
+                    <td ng-repeat="player in playersList.names">
+                        {{getPlayersScore(score, player)}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <!--<div class="gridStyle" ng-grid="gridOptions"></div>-->
     </div>
 </div>
