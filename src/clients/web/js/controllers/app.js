@@ -4,19 +4,19 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/login',
           {controller: 'loginCtrl',
-          templateUrl: 'partials/controllers/login.html'
+          templateUrl: 'src/clients/web/partials/controllers/login.html'
     })
     .when('/scores',
           {controller: 'scoreCtrl',
-           templateUrl: 'partials/controllers/score.html'
+           templateUrl: 'src/clients/web/partials/controllers/score.html'
     })
     .when('/rules',
           {controller: 'rulesCtrl',
-           templateUrl: 'partials/controllers/rules.html'
+           templateUrl: 'src/clients/web/partials/controllers/rules.html'
     })
     .when('/dashboard/:name',
           {controller: 'dashboardCtrl',
-           templateUrl: 'partials/controllers/dashboard.html'
+           templateUrl: 'src/clients/web/partials/controllers/dashboard.html'
     })
     .when('/dashboard/', {redirectTo: '/dashboard/iron'})
     .otherwise({redirectTo: '/'});
