@@ -14,8 +14,7 @@ app.controller("scoreCtrl", function($scope, scoreService) {
 
     $scope.getScoreOrder = function(score) {
         for(var hole in score) {
-            console.info("hole number " + JSON.stringify(score[hole].hole))
-            return parseInt(score[hole].hole);
+            return parseFloat(score[hole].hole);
         }
         return 0;
     }
@@ -30,10 +29,15 @@ app.controller("scoreCtrl", function($scope, scoreService) {
 
     $scope.getHole = function(score) {
         for(var hole in score) {
+            if((hole === 'Front 9') ||
+              (hole === 'Back 9')) {
+                return hole;
+            }
+
             return score[hole].hole;
         }
 
-        return 0;
+        return '';
     }
 
     $scope.getPar = function(score) {
@@ -41,7 +45,7 @@ app.controller("scoreCtrl", function($scope, scoreService) {
             return score[hole].par;
         }
 
-        return 0;
+        return '';
     }
 
     $scope.getIndex = function(score) {
@@ -49,7 +53,7 @@ app.controller("scoreCtrl", function($scope, scoreService) {
             return score[hole].index;
         }
 
-        return 0;
+        return '';
     }
 
 });

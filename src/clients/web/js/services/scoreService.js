@@ -31,6 +31,7 @@ app.service("scoreService", function($rootScope, $http) {
                     }
 
                 }
+                addTotals(score);
                 console.info(score);
             }
         }
@@ -47,12 +48,39 @@ app.service("scoreService", function($rootScope, $http) {
                     for(var player in cardInfo.score[hole][holeKey].players) {
                         playersList.names.push(player);
                     }
-                    console.info("players names " + JSON.stringify(playersList))
+                    console.info("players names " + JSON.stringify(playersList));
                     return;
                 }
 
             }
         }
+    }
+
+    function addTotals(scores) {
+        var front9 = {hole:9.5, players: {}},
+            back9 = {hole:19, players: {}};
+
+        for(var hole in scores) {
+            for(var playersKey in scores[hole]) {
+                var players = scores[hole][playersKey].players;
+                for(var player in players) {
+                    console.info(player + " score " + players[player])
+                    if(scores[hole][playersKey].hole < 10) {
+                        front9.players[player] = front9.players[player] || 0;
+                        front9.players[player] += players[player];
+
+                    }
+                    else {
+                        back9.players[player] = back9.players[player] || 0;
+                        back9.players[player] += players[player];
+                    }
+                }
+            }
+        }
+
+        scores.push({'Front 9': front9});
+        scores.push({'Back 9': back9});
+
     }
 
     methods.getScore = function() {
