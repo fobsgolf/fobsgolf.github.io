@@ -14,12 +14,11 @@ app.config(['$routeProvider', function($routeProvider) {
           {controller: 'rulesCtrl',
            templateUrl: 'src/clients/web/partials/controllers/rules.html'
     })
-    .when('/dashboard/:name',
+    .when('/dashboard',
           {controller: 'dashboardCtrl',
            templateUrl: 'src/clients/web/partials/controllers/dashboard.html'
     })
-    .when('/dashboard/', {redirectTo: '/dashboard/iron'})
-    .otherwise({redirectTo: '/dashboard/iron'});
+    .otherwise({redirectTo: '/dashboard'});
 }]);
 
 app.controller("appCtrl", function($scope, $location, scoreService) {
