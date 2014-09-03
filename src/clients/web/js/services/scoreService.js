@@ -2,12 +2,12 @@ app.service("scoreService", function($rootScope, $http) {
     var methods = {};
     var scoreCards = [];
     var playersList = {names: []};
+    var strokeyTally = {scoreCards: []};
 
     function successCB(data, status, headers, config) {
         // this callback will be called asynchronously
         // when the response is available
         var inData = JSON.parse(data);
-        console.log("successfull set data. Response " + data());
     }
 
     function errorCB(data, status, headers, config) {
@@ -32,7 +32,6 @@ app.service("scoreService", function($rootScope, $http) {
 
                 }
                 addTotals(score);
-                console.info(score);
             }
         }
 
@@ -48,7 +47,6 @@ app.service("scoreService", function($rootScope, $http) {
                     for(var player in cardInfo.score[hole][holeKey].players) {
                         playersList.names.push(player);
                     }
-                    console.info("players names " + JSON.stringify(playersList));
                     return;
                 }
 
@@ -64,7 +62,6 @@ app.service("scoreService", function($rootScope, $http) {
             for(var playersKey in scores[hole]) {
                 var players = scores[hole][playersKey].players;
                 for(var player in players) {
-                    console.info(player + " score " + players[player])
                     if(scores[hole][playersKey].hole < 10) {
                         front9.players[player] = front9.players[player] || 0;
                         front9.players[player] += players[player];
@@ -83,6 +80,215 @@ app.service("scoreService", function($rootScope, $http) {
 
     }
 
+    function updateStrokeProperty(strokes, par, record) {
+        var diff = strokes - par;
+
+        if(diff === -3) {
+            if(typeof record.albatross === 'undefined') {
+                record.albatross= {
+                    value: 1,
+                    display: 'Albatross'
+                };
+            }
+            else {
+                record.albatross.value++;
+            }
+        }
+        else if(diff === -2) {
+            if(typeof record.eagle === 'undefined') {
+                record.eagle = {
+                    value: 1,
+                    display: 'Eagle'
+                };
+            }
+            else {
+                record.eagle.value++;
+            }
+        }
+        else if(diff === -1) {
+            if(typeof record.birdie === 'undefined') {
+                record.birdie = {
+                    value: 1,
+                    display: 'Birdie'
+                };
+            }
+            else {
+                record.birdie.value++;
+            }
+        }
+        else if(diff === 0) {
+            if(typeof record.par === 'undefined') {
+                record.par = {
+                    value: 1,
+                    display: 'Par'
+                };
+            }
+            else {
+                record.par.value++;
+            }
+        }
+        else if(diff === 1) {
+            if(typeof record.bogie === 'undefined') {
+                record.bogie = {
+                    value: 1,
+                    display: 'Bogie'
+                };
+            }
+            else {
+                record.bogie.value++;
+            }
+        }
+        else if(diff === 2) {
+            if(typeof record.doublebogie === 'undefined') {
+                record.doublebogie = {
+                    value: 1,
+                    display: 'Double Bogie'
+                };
+            }
+            else {
+                record.doublebogie.value++;
+            }
+        }
+        else if(diff === 3) {
+            if(typeof record.triplebogie === 'undefined') {
+                record.triplebogie = {
+                    value: 1,
+                    display: 'Triple Bogie'
+                };
+            }
+            else {
+                record.triplebogie.value++;
+            }
+        }
+        else if(diff === 4) {
+            if(typeof record.quadbogie === 'undefined') {
+                record.quadbogie = {
+                    value: 1,
+                    display: 'Quad Bogie'
+                };
+            }
+            else {
+                record.quadbogie.value++;
+            }
+        }
+        else if(diff === 5) {
+            if(typeof record.fiveover === 'undefined') {
+                record.fiveover = {
+                    value: 1,
+                    display: '5 Over'
+                };
+            }
+            else {
+                record.fiveover.value++;
+            }
+        }
+        else if(diff === 6) {
+            if(typeof record.sixover === 'undefined') {
+                record.sixover = {
+                    value: 1,
+                    display: '6 Over'
+                };
+            }
+            else {
+                record.sixover.value++;
+            }
+        }
+        else if(diff === 7) {
+            if(typeof record.sevenover === 'undefined') {
+                record.sevenover = {
+                    value: 1,
+                    display: '7 Over'
+                };
+            }
+            else {
+                record.sevenover.value++;
+            }
+        }
+        else if(diff === 8) {
+            if(typeof record.eightover === 'undefined') {
+                record.eightover = {
+                    value: 1,
+                    display: '8 Over'
+                };
+            }
+            else {
+                record.eightover.value++;
+            }
+        }
+        else if(diff === 9) {
+            if(typeof record.nineover === 'undefined') {
+                record.nineover = {
+                    value: 1,
+                    display: '9 Over'
+                };
+            }
+            else {
+                record.nineover.value++;
+            }
+        }
+        else if(diff === 10) {
+            if(typeof record.tenover === 'undefined') {
+                record.tenover = {
+                    value: 1,
+                    display: '10 Over'
+                };
+            }
+            else {
+                record.tenover.value++;
+            }
+        }
+    }
+
+    // Create model for bar graph showing
+    // bogies, birdies, etc for a course on a given day
+    /*
+    [
+        {
+            date: '1409367600',
+            name: 'Magpies',
+            Tuan: {
+                par: {
+                    value: 4,
+                    display: 'Par'
+                },
+                birdie: {
+                    value: 3,
+                    display: 'Birdie'
+                }
+            },
+            Leir: {
+            },
+            Dat: {
+            }
+        }
+    ]
+    */
+    function parseStrokeTally() {
+        strokeyTally.scoreCards.length = 0;
+
+        for(var scoreCard in scoreCards) {
+            var entry = {};
+            entry.date = scoreCards[scoreCard].date;
+            entry.name = scoreCards[scoreCard].name;
+            var scoreRef = scoreCards[scoreCard].score;
+            for(var scores in scoreRef) {
+                for(var hole in scoreRef[scores]) {
+                    var holeItem = scoreRef[scores][hole];
+                    // Create player record for each day played
+                    // if the records doesn't exist
+
+                    for(var player in holeItem.players) {
+                        if(typeof entry[player] === 'undefined') {
+                            entry[player] = {};
+                        }
+                        updateStrokeProperty(holeItem.players[player], holeItem.par, entry[player]);
+                    }
+                }
+            }
+            strokeyTally.scoreCards.push(entry);
+        }
+    }
+
     methods.getScore = function() {
         return scoreCards;
     };
@@ -95,8 +301,13 @@ app.service("scoreService", function($rootScope, $http) {
         return playersList;
     };
 
+    methods.getStrokeTally = function() {
+        return strokeyTally;
+    };
+
     getMagpiesScores();
     parsePlayers();
+    parseStrokeTally();
 
 
     return methods;

@@ -5,7 +5,8 @@ app.directive('fobsGraph', function() {
         scope: {
             title: '@',
             id: '@',
-            series: '='
+            series: '=',
+            type: '@'
         },
         controller: function($scope) {
             var options = {
@@ -14,10 +15,10 @@ app.directive('fobsGraph', function() {
                     plotBorderWidth: null,
                     plotShadow: false,
                     renderTo: $scope.id,
-                    type: 'pie'
+                    type: $scope.type
                 },
                 title: {
-                    text: ''
+                    text: 'massive'
                 },
                 tooltip: {
                     //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -38,8 +39,35 @@ app.directive('fobsGraph', function() {
                 }
             };
 
-            $scope.chart = new Highcharts.Chart(options);
-            $scope.chart.addSeries($scope.series);
+            if($scope.type === 'bar') {
+                options.legend = {
+                    reversed: true
+                };
+
+                options.plotOptions.series = {
+                    stacking: 'normal'
+                };
+            }
+
+
+
+            $scope.$watch('series', function(newVal) {
+                if(typeof newVal !== 'undefined') {
+                    if($scope.series.length > 0) {
+                        var series = $scope.series[0].series;
+                        options.xAxis = {
+                            categories: $scope.series[0].categories
+                        }
+                        options.title.text = $scope.series[0].name;
+                        $scope.chart = new Highcharts.Chart(options);
+
+                        for(var s in series) {
+                            $scope.chart.addSeries(series[s]);
+                        }
+
+                    }
+                }
+            });
         },
         template: "<div></div>",
         link: function($scope, element, attrs) {

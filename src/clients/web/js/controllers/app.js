@@ -19,7 +19,7 @@ app.config(['$routeProvider', function($routeProvider) {
            templateUrl: 'src/clients/web/partials/controllers/dashboard.html'
     })
     .when('/dashboard/', {redirectTo: '/dashboard/iron'})
-    .otherwise({redirectTo: '/'});
+    .otherwise({redirectTo: '/dashboard/iron'});
 }]);
 
 app.controller("appCtrl", function($scope, $location, scoreService) {

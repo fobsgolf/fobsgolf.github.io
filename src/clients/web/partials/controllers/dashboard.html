@@ -1,26 +1,11 @@
 <div class="dash container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav navbar-sidebar">
-              <li ng-class="{active: selected('/dashboard/iron')}"><a href="#/dashboard/iron">Iron Shaft</a></li>
-              <li ng-class="{active: selected('/dashboard/rain')}"><a href="#/dashboard/rain">Rain Man</a></li>
-              <li ng-class="{active: selected('/dashboard/bender')}"><a href="#/dashboard/bender">Bender</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-12 main">
             <h1 class="page-header">Dashboard</h1>
 
             <div class="row placeholders">
-                <div class="col-xs-6 placeholder">
-                    <fobs-graph id="par5" class="img-responsive" title="{{graphTitle1}}" series="series5"></fobs-graph>
-                </div>
-
-                <div class="col-xs-6 placeholder">
-                    <fobs-graph id="par4" class="img-responsive" title="{{graphTitle2}}" series="series4"></fobs-graph>
-                </div>
-
-                <div class="col-xs-6 placeholder">
-                    <fobs-graph id="par3" class="img-responsive" title="{{graphTitle3}}" series="series3"></fobs-graph>
+                <div class="col-xs-12 placeholder">
+                    <fobs-graph type="bar" id="par" class="img-responsive" title="{{graphTitle}}" series="series.data"></fobs-graph>
                 </div>
             </div>
         </div>
