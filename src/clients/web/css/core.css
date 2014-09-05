@@ -1,11 +1,55 @@
 body {
-  padding-top: 70px;
+    padding-top: 70px;
 }
 .content {
-  padding: 40px 15px;
-  text-align: center;
-  left: auto;
-  right: auto;
+    padding: 40px 15px;
+    text-align: center;
+    left: auto;
+    right: auto;
 }
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.custom-menu {
+    background-color: black;
+    position: relative;
+    float: right;
+    margin-right: 15px;
+    padding: 9px 10px;
+    margin-top: 3px;
+    margin-bottom: 8px;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 44px;
+    height: 34px;
+}
+
+.custom-menu .icon-bar {
+    background-color: #fff;
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+}
+
+.custom-menu .icon-bar+.icon-bar {
+    margin-top: 4px;
+}
+
+.custom-menu-items {
+    display: block;
+    position: relative;
+    margin-top: 40px;
+    color: white;
+}
+
+.custom-menu-items li>a {
+    color: white;
+    background-color: grey;
+}
+
+.custom-menu-items li:hover, .custom-menu-items li>a:hover {
+    background-color: black;
+
+}
