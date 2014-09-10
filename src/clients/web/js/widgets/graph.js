@@ -6,7 +6,8 @@ app.directive('fobsGraph', function() {
             title: '@',
             id: '@',
             series: '=',
-            type: '@'
+            type: '@',
+            filter: '='
         },
         controller: function($scope) {
             var options = {
@@ -50,22 +51,35 @@ app.directive('fobsGraph', function() {
             }
 
 
+            function updateGraph() {
+                if($scope.series.length > 0) {
+                    for(var card in $scope.series) {
+                        if($scope.series[card].date === $scope.filter) {
+                            var series = $scope.series[card].series;
+                            options.xAxis = {
+                                categories: $scope.series[card].categories
+                            }
+                            options.title.text = $scope.series[card].name;
+                            $scope.chart = new Highcharts.Chart(options);
+
+                            for(var s in series) {
+                                $scope.chart.addSeries(series[s]);
+                            }
+                        }
+                    }
+                }
+            }
 
             $scope.$watch('series', function(newVal) {
                 if(typeof newVal !== 'undefined') {
-                    if($scope.series.length > 0) {
-                        var series = $scope.series[0].series;
-                        options.xAxis = {
-                            categories: $scope.series[0].categories
-                        }
-                        options.title.text = $scope.series[0].name;
-                        $scope.chart = new Highcharts.Chart(options);
+                    updateGraph();
+                }
+            });
 
-                        for(var s in series) {
-                            $scope.chart.addSeries(series[s]);
-                        }
-
-                    }
+            $scope.$watch('filter', function(newVal, oldVal) {
+                if((typeof newVal !== 'undefined') &&
+                   (newVal !== oldVal)) {
+                    updateGraph();
                 }
             });
         },

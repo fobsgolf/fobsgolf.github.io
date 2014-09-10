@@ -10,11 +10,21 @@ body {
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
+.menu-container {
+    position: absolute;
+    top: 0;
+    margin-top: 68px;
+    width: 95%;
+}
+
+.menu-container div {
+    overflow: hidden;
+}
+
 .custom-menu {
     background-color: black;
     position: relative;
     float: right;
-    margin-right: 15px;
     padding: 9px 10px;
     margin-top: 3px;
     margin-bottom: 8px;
@@ -23,6 +33,7 @@ body {
     border-radius: 4px;
     width: 44px;
     height: 34px;
+    display: block;
 }
 
 .custom-menu .icon-bar {
@@ -40,8 +51,10 @@ body {
 .custom-menu-items {
     display: block;
     position: relative;
-    margin-top: 40px;
     color: white;
+    width: 280px;
+    float: right;
+    text-align: center;
 }
 
 .custom-menu-items li>a {
@@ -51,5 +64,4 @@ body {
 
 .custom-menu-items li:hover, .custom-menu-items li>a:hover {
     background-color: black;
-
 }

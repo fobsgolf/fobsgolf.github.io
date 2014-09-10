@@ -1,27 +1,26 @@
 <div class="dash container-fluid">
-    <div class="row">
-        <div class="col-sm-9 main">
-            <h1 class="page-header">Dashboard</h1>
-            <div class="row placeholders">
-                <div class="col-xs-12 placeholder">
-                    <fobs-graph type="bar" id="par" class="img-responsive" title="{{graphTitle}}" series="series.data"></fobs-graph>
-                </div>
+    <div class="col-sm-12 main">
+        <h1 class="page-header">Dashboard</h1>
+        <div class="row placeholders">
+            <div class="col-xs-12 placeholder">
+                <fobs-graph type="bar" id="par" class="img-responsive" title="{{graphTitle}}" series="series.data" filter="selectedDate"></fobs-graph>
             </div>
-
         </div>
-        <div class="col-sm-3">
+
+    </div>
+    <div class="menu-container">
+        <div>
             <button class="custom-menu" ng-click="collapsed = !collapsed">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div ng-if="!collapsed" class="custom-menu-items">
-                <ul class="nav nav-pills nav-stacked">
-                    <li ng-repeat="day in series.data"><a href="#/dashboard">{{day.date * 1000 | date:'dd-MM-yyyy HH:mm:ss Z'}}</a></li>
-                </ul>
-            </div>
-
+        </div>
+        <div ng-if="!collapsed" class="custom-menu-items">
+            <ul class="nav nav-pills nav-stacked">
+                <li ng-repeat="day in series.data" ng-click="dateClicked(day)"><a href="">{{day.date * 1000 | date:'dd-MM-yyyy HH:mm:ss Z'}}</a></li>
+            </ul>
         </div>
     </div>
 </div>

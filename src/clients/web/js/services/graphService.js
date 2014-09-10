@@ -1,6 +1,6 @@
 app.service("graphService", function($rootScope, scoreService) {
     var methods = {},
-        pieStats = {data: []};
+        pieStats = {'data': []};
 
     $rootScope.graphServiceTally = scoreService.getStrokeTally();
 
@@ -120,6 +120,8 @@ app.service("graphService", function($rootScope, scoreService) {
                 }
             }
             pieStats.data.push(entry);
+            console.info('pushed ')
+            console.info(entry)
         }
     }
 
