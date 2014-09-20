@@ -1,9 +1,21 @@
 <div class="dash container-fluid">
+    <ul class="scrollImages">
+        <li ng-class="getImageClass(course)" ng-repeat="course in series" ng-click="courseClicked(course)">
+        </li>
+    </ul>
     <div class="col-sm-12 main">
-        <h1 class="page-header">Dashboard</h1>
         <div class="row placeholders">
             <div class="col-xs-12 placeholder">
-                <fobs-graph type="bar" id="par" class="img-responsive" title="{{graphTitle}}" series="series.data" filter="selectedDate"></fobs-graph>
+                <fobs-graph
+                    type="bar"
+                    id="par"
+                    class="img-responsive"
+                    title="{{graphTitle}}"
+                    series="series"
+                    filter-date="selectedDate"
+                    filter-course="selectedCourse"
+                    >
+                </fobs-graph>
             </div>
         </div>
 
@@ -19,7 +31,7 @@
         </div>
         <div ng-if="!collapsed" class="custom-menu-items">
             <ul class="nav nav-pills nav-stacked">
-                <li ng-repeat="day in series.data" ng-click="dateClicked(day)"><a href="">{{day.date * 1000 | date:'dd-MM-yyyy HH:mm:ss Z'}}</a></li>
+                <li ng-repeat="day in courseItem.data" ng-click="dateClicked(day)"><a href="">{{day.date * 1000 | date:'dd-MM-yyyy HH:mm:ss'}}</a></li>
             </ul>
         </div>
     </div>

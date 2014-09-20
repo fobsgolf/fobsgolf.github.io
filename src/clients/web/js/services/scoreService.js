@@ -24,6 +24,7 @@ app.service("scoreService", function($rootScope, $http) {
                 cardInfo.name = magpiesTemplate.name;
                 cardInfo.in = magpiesTemplate.in;
                 cardInfo.out = magpiesTemplate.out;
+                cardInfo.par = magpiesTemplate.par;
                 var score = cardInfo.score;
                 for(var hole in score) {
                     for(var holeKey in score[hole]) {
@@ -35,7 +36,8 @@ app.service("scoreService", function($rootScope, $http) {
             }
         }
 
-        scoreCards = magpiesScore;
+        scoreCards.push({name: magpiesTemplate.name, data: magpiesScore});
+        console.info(scoreCards);
     }
 
     function parsePlayers() {
@@ -56,7 +58,8 @@ app.service("scoreService", function($rootScope, $http) {
 
     function addTotals(scores) {
         var front9 = {hole:9.5, players: {}},
-            back9 = {hole:19, players: {}};
+            back9 = {hole:19, players: {}},
+            total = {hole:20, players: {}, par: 0};
 
         for(var hole in scores) {
             for(var playersKey in scores[hole]) {
@@ -72,12 +75,17 @@ app.service("scoreService", function($rootScope, $http) {
                         back9.players[player] += players[player];
                     }
                 }
+                total.par += scores[hole][playersKey].par;
             }
         }
 
         scores.push({'Front 9': front9});
         scores.push({'Back 9': back9});
-
+        for(var name in front9.players) {
+            var tot = front9.players[name];
+            total.players[name] = tot + back9.players[name];
+        }
+        scores.push({'Total': total});
     }
 
     function updateStrokeProperty(strokes, par, record) {
@@ -266,26 +274,37 @@ app.service("scoreService", function($rootScope, $http) {
     function parseStrokeTally() {
         strokeyTally.scoreCards.length = 0;
 
-        for(var scoreCard in scoreCards) {
-            var entry = {};
-            entry.date = scoreCards[scoreCard].date;
-            entry.name = scoreCards[scoreCard].name;
-            var scoreRef = scoreCards[scoreCard].score;
-            for(var scores in scoreRef) {
-                for(var hole in scoreRef[scores]) {
-                    var holeItem = scoreRef[scores][hole];
-                    // Create player record for each day played
-                    // if the records doesn't exist
+        for(var course in scoreCards) {
+            var courseItem = scoreCards[course];
+            var courseTally = {
+                name: courseItem.name,
+                data: []
+            }
+            console.info("parse stroke")
+                console.info(courseItem);
+            for(var scoreCard in courseItem.data) {
+                var entry = {};
 
-                    for(var player in holeItem.players) {
-                        if(typeof entry[player] === 'undefined') {
-                            entry[player] = {};
+                entry.date = courseItem.data[scoreCard].date;
+                entry.name = courseItem.data[scoreCard].name;
+                var scoreRef = courseItem.data[scoreCard].score;
+                for(var scores in scoreRef) {
+                    for(var hole in scoreRef[scores]) {
+                        var holeItem = scoreRef[scores][hole];
+                        // Create player record for each day played
+                        // if the records doesn't exist
+
+                        for(var player in holeItem.players) {
+                            if(typeof entry[player] === 'undefined') {
+                                entry[player] = {};
+                            }
+                            updateStrokeProperty(holeItem.players[player], holeItem.par, entry[player]);
                         }
-                        updateStrokeProperty(holeItem.players[player], holeItem.par, entry[player]);
                     }
                 }
+                courseTally.data.push(entry);
             }
-            strokeyTally.scoreCards.push(entry);
+            strokeyTally.scoreCards.push(courseTally);
         }
     }
 

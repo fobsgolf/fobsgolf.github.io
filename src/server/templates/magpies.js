@@ -91,5 +91,6 @@ var magpiesTemplate = {
         hole: 18
     },
     in: 35,
-    out: 37
+    out: 37,
+    par: 72
 };

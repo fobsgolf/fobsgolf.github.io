@@ -1,6 +1,7 @@
 app.controller("scoreCtrl", function($scope, scoreService) {
     $scope.scores = scoreService.getScore();
     $scope.playersList = scoreService.getPlayersList();
+    $scope.summary = true;
 
     console.info($scope.playersList);
     /*$scope.gridOptions = {data: 'registry.list',
@@ -30,7 +31,9 @@ app.controller("scoreCtrl", function($scope, scoreService) {
     $scope.getHole = function(score) {
         for(var hole in score) {
             if((hole === 'Front 9') ||
-              (hole === 'Back 9')) {
+               (hole === 'Back 9') ||
+               (hole === 'Total') ||
+               (hole === 'Par')) {
                 return hole;
             }
 
@@ -54,6 +57,21 @@ app.controller("scoreCtrl", function($scope, scoreService) {
         }
 
         return '';
+    }
+
+    $scope.viewSwitch = function() {
+        $scope.summary = !$scope.summary;
+        console.info('view switch entered')
+    }
+
+    $scope.getPlayerTotal = function(player, cardInfo) {
+        if(cardInfo && cardInfo.score && (cardInfo.score.length > 0)) {
+            var totals = cardInfo.score[cardInfo.score.length - 1].Total;
+            return player + ": " + totals.players[player];
+        }
+
+        return player + ": Not recorded";
+
     }
 
 });

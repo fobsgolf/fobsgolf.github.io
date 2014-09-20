@@ -1,0 +1,7 @@
+.image.magpies {
+    background: url('../images/magpies.jpg');
+    width: 91px;
+    height: 80px;
+    display: block;
+    background-repeat: no-repeat;
+}

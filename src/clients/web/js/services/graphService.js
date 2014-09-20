@@ -1,6 +1,6 @@
 app.service("graphService", function($rootScope, scoreService) {
     var methods = {},
-        pieStats = {'data': []};
+        pieStats = [];
 
     $rootScope.graphServiceTally = scoreService.getStrokeTally();
 
@@ -62,67 +62,79 @@ app.service("graphService", function($rootScope, scoreService) {
     }
     */
     function parseTally() {
-        pieStats.data.length = 0;
-        var scoreCards = $rootScope.graphServiceTally.scoreCards;
+        //pieStats.data.length = 0;
+        var courses = $rootScope.graphServiceTally.scoreCards;
 
-        // First get all the categories
-        for(var scoreCard in scoreCards) {
-            var entry = {
-                categories: [],
-                series: [],
-                date: scoreCards[scoreCard].date,
-                name: scoreCards[scoreCard].name
-            };
+        for(var scoreCards in courses) {
+            var course = courses[scoreCards];
+            console.info("parseTally")
+            console.info(course);
+            var courseTally = {
+                name: course.name,
+                data: []
+            }
+            // First get all the categories
+            for(var scoreCard in course.data) {
+                var entry = {
+                    categories: [],
+                    series: [],
+                    date: course.data[scoreCard].date,
+                    name: course.data[scoreCard].name
+                };
 
-            var categories = [];
-            // Iterate over date, Tuan, Leir, Dat
-            var prop, propRef, cat, catName;
-            for(prop in scoreCards[scoreCard]) {
-                propRef = scoreCards[scoreCard][prop];
-                if(typeof propRef === 'object') {
-                    // Iterate over par, bogie, etc
-                    for(cat in propRef) {
-                        catName = propRef[cat].display;
-                        categories.push(catName);
+                var categories = [];
+                // Iterate over date, Tuan, Leir, Dat
+                var prop, propRef, cat, catName;
+                for(prop in course.data[scoreCard]) {
+                    propRef = course.data[scoreCard][prop];
+                    if(typeof propRef === 'object') {
+                        // Iterate over par, bogie, etc
+                        for(cat in propRef) {
+                            catName = propRef[cat].display;
+                            categories.push(catName);
+                        }
                     }
                 }
-            }
 
-            entry.categories = categories.filter(onlyUnique);
-            // Now create the series
-            // Iterate over date, Tuan, Leir, Dat
-            for(prop in scoreCards[scoreCard]) {
-                propRef = scoreCards[scoreCard][prop];
+                entry.categories = categories.filter(onlyUnique);
+                // Now create the series
+                // Iterate over date, Tuan, Leir, Dat
+                for(prop in course.data[scoreCard]) {
+                    propRef = course.data[scoreCard][prop];
 
-                if(typeof propRef === 'object') {
-                    var playerEntry = {
-                        name: prop,
-                        data: []
-                    };
-                    // Iterate over par, bogie, etc
-                    for(cat in entry.categories) {
-                        var found = false;
-                        var val = 0;
+                    if(typeof propRef === 'object') {
+                        var playerEntry = {
+                            name: prop,
+                            data: []
+                        };
+                        // Iterate over par, bogie, etc
+                        for(cat in entry.categories) {
+                            var found = false;
+                            var val = 0;
 
-                        for(c in propRef) {
-                            catName = propRef[c].display;
-                            if(catName === entry.categories[cat]) {
-                                found = true;
-                                val = propRef[c].value;
-                                break;
+                            for(c in propRef) {
+                                catName = propRef[c].display;
+                                if(catName === entry.categories[cat]) {
+                                    found = true;
+                                    val = propRef[c].value;
+                                    break;
+                                }
                             }
+
+                            playerEntry.data.push(val);
                         }
 
-                        playerEntry.data.push(val);
+                        entry.series.push(playerEntry);
                     }
-
-                    entry.series.push(playerEntry);
                 }
+                courseTally.data.push(entry);
+
+                console.info(entry)
             }
-            pieStats.data.push(entry);
+            pieStats.push(courseTally);
             console.info('pushed ')
-            console.info(entry)
         }
+
     }
 
     function onlyUnique(value, index, self) {

@@ -7,7 +7,8 @@ app.directive('fobsGraph', function() {
             id: '@',
             series: '=',
             type: '@',
-            filter: '='
+            filterDate: '=',
+            filterCourse: '='
         },
         controller: function($scope) {
             var options = {
@@ -50,20 +51,28 @@ app.directive('fobsGraph', function() {
                 };
             }
 
-
+            // todo choose selected course (filterCourse)
             function updateGraph() {
                 if($scope.series.length > 0) {
-                    for(var card in $scope.series) {
-                        if($scope.series[card].date === $scope.filter) {
-                            var series = $scope.series[card].series;
-                            options.xAxis = {
-                                categories: $scope.series[card].categories
-                            }
-                            options.title.text = $scope.series[card].name;
-                            $scope.chart = new Highcharts.Chart(options);
+                    for(var course in $scope.series) {
+                        console.info("graph widget")
+                        console.info($scope.series[course])
+                        console.info("filter course " + $scope.filterCourse.name)
+                        if($scope.series[course].name === $scope.filterCourse.name) {
+                            var courseData = $scope.series[course].data;
+                            for(var card in courseData) {
+                                if(courseData[card].date === $scope.filterDate) {
+                                    var series = courseData[card].series;
+                                    options.xAxis = {
+                                        categories: courseData[card].categories
+                                    }
+                                    options.title.text = courseData[card].name;
+                                    $scope.chart = new Highcharts.Chart(options);
 
-                            for(var s in series) {
-                                $scope.chart.addSeries(series[s]);
+                                    for(var s in series) {
+                                        $scope.chart.addSeries(series[s]);
+                                    }
+                                }
                             }
                         }
                     }
@@ -76,12 +85,20 @@ app.directive('fobsGraph', function() {
                 }
             });
 
-            $scope.$watch('filter', function(newVal, oldVal) {
+            $scope.$watch('filterDate', function(newVal, oldVal) {
                 if((typeof newVal !== 'undefined') &&
                    (newVal !== oldVal)) {
+                    console.info("filter date changed")
                     updateGraph();
                 }
             });
+
+            $scope.$watch('filterCourse', function(newVal, oldVal) {
+                if((typeof newVal !== 'undefined') ) {
+                    console.info("graph widget course " + newVal.name)
+                    updateGraph();
+                }
+            }, true);
         },
         template: "<div></div>",
         link: function($scope, element, attrs) {
