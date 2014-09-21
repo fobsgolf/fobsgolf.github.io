@@ -58,13 +58,19 @@ body {
     text-align: center;
 }
 
+.custom-menu-items ul li {
+    z-index: 950;
+}
+
 .custom-menu-items li>a {
     color: white;
     background-color: grey;
+    z-index: 950;
 }
 
 .custom-menu-items li:hover, .custom-menu-items li>a:hover {
     background-color: black;
+    z-index: 950;
 }
 
 ul.scrollImages {
