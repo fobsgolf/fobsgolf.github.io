@@ -1,7 +1,6 @@
 app.service("scoreService", function($rootScope, $http) {
     var methods = {};
     var scoreCards = [];
-    var playersList = {names: []};
     var strokeyTally = {scoreCards: []};
 
     function successCB(data, status, headers, config) {
@@ -32,7 +31,9 @@ app.service("scoreService", function($rootScope, $http) {
                     }
 
                 }
+                cardInfo.players = parseCoursePlayer(cardInfo);
                 addTotals(score);
+                cardInfo.summary = true;
             }
         }
 
@@ -40,20 +41,32 @@ app.service("scoreService", function($rootScope, $http) {
         console.info(scoreCards);
     }
 
-    function parsePlayers() {
-        for(var day in magpiesScore) {
-            var cardInfo = magpiesScore[day];
-
-            for(var hole in cardInfo.score) {
-                for(var holeKey in cardInfo.score[hole]) {
-                    for(var player in cardInfo.score[hole][holeKey].players) {
-                        playersList.names.push(player);
-                    }
-                    return;
+    function parseCoursePlayer(cardInfo) {
+        var names = [];
+        for(var hole in cardInfo.score) {
+            for(var holeKey in cardInfo.score[hole]) {
+                for(var player in cardInfo.score[hole][holeKey].players) {
+                    names.push(player);
                 }
-
+                return names;
             }
         }
+
+        return names;
+    }
+
+    function parsePlayers(course, date) {
+        for(var day in course) {
+            var cardInfo = course[day];
+            if(date && (cardInfo.date === date)) {
+                return parseCoursePlayer(cardInfo);
+            }
+            else {
+                return parseCoursePlayer(cardInfo);
+            }
+        }
+
+        return [];
     }
 
     function addTotals(scores) {
@@ -281,7 +294,7 @@ app.service("scoreService", function($rootScope, $http) {
                 data: []
             }
             console.info("parse stroke")
-                console.info(courseItem);
+            console.info(courseItem);
             for(var scoreCard in courseItem.data) {
                 var entry = {};
 
@@ -316,16 +329,11 @@ app.service("scoreService", function($rootScope, $http) {
         $http.post(url, JSON.stringify(data)).success(successCB).error(errorCB);
     };
 
-    methods.getPlayersList = function() {
-        return playersList;
-    };
-
     methods.getStrokeTally = function() {
         return strokeyTally;
     };
 
     getMagpiesScores();
-    parsePlayers();
     parseStrokeTally();
 
 

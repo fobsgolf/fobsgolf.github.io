@@ -3,10 +3,10 @@
         <h2>{{course.name}}</h2>
         <div ng-repeat="cardInfo in course.data">
             <h3v>{{cardInfo.date * 1000| date:'dd-MM-yyyy HH:mm:ss'}}</h3>
-            <div ng-switch="summary" ng-click="viewSwitch()">
+            <div ng-switch="cardInfo.summary" ng-click="viewSwitch(cardInfo)">
                 <div ng-switch-when="true">
                     Par: {{cardInfo.par}}
-                    <span ng-repeat="player in playersList.names">
+                    <span ng-repeat="player in cardInfo.players">
                         {{getPlayerTotal(player, cardInfo)}}
                     </span>
                 </div>

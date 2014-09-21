@@ -1,9 +1,7 @@
 app.controller("scoreCtrl", function($scope, scoreService) {
     $scope.scores = scoreService.getScore();
-    $scope.playersList = scoreService.getPlayersList();
     $scope.summary = true;
 
-    console.info($scope.playersList);
     /*$scope.gridOptions = {data: 'registry.list',
                         columnDefs: [{field: "fname", displayName: "First Name"},
                                     {field: "lname", displayName: "Last Name"},
@@ -59,12 +57,12 @@ app.controller("scoreCtrl", function($scope, scoreService) {
         return '';
     }
 
-    $scope.viewSwitch = function() {
-        $scope.summary = !$scope.summary;
-        console.info('view switch entered')
+    $scope.viewSwitch = function(cardInfo) {
+        cardInfo.summary = !cardInfo.summary;
     }
 
     $scope.getPlayerTotal = function(player, cardInfo) {
+        console.info("get player total " + player)
         if(cardInfo && cardInfo.score && (cardInfo.score.length > 0)) {
             var totals = cardInfo.score[cardInfo.score.length - 1].Total;
             return player + ": " + totals.players[player];
