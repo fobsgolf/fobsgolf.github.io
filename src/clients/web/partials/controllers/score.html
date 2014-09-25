@@ -2,38 +2,57 @@
     <div ng-repeat="course in scores">
         <h2>{{course.name}}</h2>
         <div ng-repeat="cardInfo in course.data">
-            <h3v>{{cardInfo.date * 1000| date:'dd-MM-yyyy HH:mm:ss'}}</h3>
-            <div ng-switch="cardInfo.summary" ng-click="viewSwitch(cardInfo)">
-                <div ng-switch-when="true">
-                    Par: {{cardInfo.par}}
-                    <span ng-repeat="player in cardInfo.players">
-                        {{getPlayerTotal(player, cardInfo)}}
-                    </span>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">{{cardInfo.date * 1000| date:'dd-MM-yyyy HH:mm:ss'}}</div>
                 </div>
-                <div ng-switch-default>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Hole</th>
-                                <th>Par</th>
-                                <th>Index</th>
-                                <th ng-repeat="player in cardInfo.players">{{player}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="score in cardInfo.score | orderBy:getScoreOrder">
-                                <td>{{getHole(score)}}</td>
-                                <td>{{getPar(score)}}</td>
-                                <td>{{getIndex(score)}}</td>
-                                <td ng-repeat="player in cardInfo.players">
-                                    {{getPlayersScore(score, player)}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="panel-body">
+                    <div ng-switch="cardInfo.summary" ng-click="viewSwitch(cardInfo)">
+                        <div ng-switch-when="true">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Par</th>
+                                        <th ng-repeat="player in cardInfo.players">{{player}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {{cardInfo.par}}
+                                        </td>
+                                        <td ng-repeat="player in cardInfo.players">
+                                            {{getPlayerTotal(player, cardInfo)}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ng-switch-default>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Hole</th>
+                                        <th>Par</th>
+                                        <th>Index</th>
+                                        <th ng-repeat="player in cardInfo.players">{{player}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="score in cardInfo.score | orderBy:getScoreOrder">
+                                        <td>{{getHole(score)}}</td>
+                                        <td>{{getPar(score)}}</td>
+                                        <td>{{getIndex(score)}}</td>
+                                        <td ng-repeat="player in cardInfo.players">
+                                            {{getPlayersScore(score, player)}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <!--<div class="gridStyle" ng-grid="gridOptions"></div>-->
         </div>
     </div>

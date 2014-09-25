@@ -65,7 +65,7 @@ app.controller("scoreCtrl", function($scope, scoreService) {
         console.info("get player total " + player)
         if(cardInfo && cardInfo.score && (cardInfo.score.length > 0)) {
             var totals = cardInfo.score[cardInfo.score.length - 1].Total;
-            return player + ": " + totals.players[player];
+            return totals.players[player];
         }
 
         return player + ": Not recorded";
