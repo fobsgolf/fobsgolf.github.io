@@ -14,12 +14,11 @@ body {
     position: absolute;
     top: 68px;
     width: 95%;
-    z-index: 500;
+    z-index: 950;
 }
 
 .menu-container div {
     overflow: hidden;
-    z-index: 950;
     position: relative;
 }
 
@@ -62,6 +61,7 @@ body {
 .custom-menu-items li>a {
     color: white;
     background-color: grey;
+    position: relative;
 }
 
 .custom-menu-items li:hover, .custom-menu-items li>a:hover {
