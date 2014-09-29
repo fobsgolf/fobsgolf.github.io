@@ -29,12 +29,13 @@ app.controller("dashboardCtrl", function($scope, $location, graphService) {
         }
     });
 
-    $scope.courseClicked = function(course) {
-        $scope.selectedCourse.name = course.name;
+    $scope.courseClicked = function(courseObj) {
+        $scope.selectedCourse.name = courseObj.name;
         console.info("image clicked")
         for(var course in $scope.series) {
             if($scope.series[course].name === $scope.selectedCourse.name) {
                 $scope.courseItem = $scope.series[course];
+                $scope.selectedDate = $scope.series[course].data[0].date;
             }
         }
     };
@@ -42,6 +43,7 @@ app.controller("dashboardCtrl", function($scope, $location, graphService) {
     $scope.getImageClass = function(course) {
         var cls = "image ";
         cls += course.name.toLowerCase();
+        console.info("course name " + cls)
         return cls;
     }
 })

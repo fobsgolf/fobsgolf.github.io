@@ -1,6 +1,7 @@
 app.controller("scoreCtrl", function($scope, scoreService) {
     $scope.scores = scoreService.getScore();
     $scope.summary = true;
+    $scope.selectedCourse = 'Magpies';
 
     /*$scope.gridOptions = {data: 'registry.list',
                         columnDefs: [{field: "fname", displayName: "First Name"},
@@ -70,6 +71,17 @@ app.controller("scoreCtrl", function($scope, scoreService) {
 
         return player + ": Not recorded";
 
+    }
+
+    $scope.courseClicked = function(courseObj) {
+        $scope.selectedCourse = courseObj.name;
+    };
+
+    $scope.getImageClass = function(course) {
+        var cls = "image ";
+        cls += course.name.toLowerCase();
+        console.info("course name " + cls)
+        return cls;
     }
 
 });

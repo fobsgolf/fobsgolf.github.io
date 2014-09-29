@@ -5,3 +5,11 @@
     display: block;
     background-repeat: no-repeat;
 }
+
+.image.mollymook {
+    background: url('../images/mollymookHilltop2.jpg');
+    width: 91px;
+    height: 80px;
+    display: block;
+    background-repeat: no-repeat;
+}

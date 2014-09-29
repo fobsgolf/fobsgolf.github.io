@@ -77,10 +77,12 @@ ul.scrollImages {
     height: 80px;
     z-index: 900;
     position: relative;
+    list-style-type: none;
 }
 
 ul.scrollImages li {
     display: inline;
     width: 150px;
     height: 150px;
+    float: left;
 }

@@ -15,19 +15,22 @@ app.service("scoreService", function($rootScope, $http) {
     }
 
     function getMagpiesScores() {
-        for(var day in magpiesScore) {
-            var cardInfo = magpiesScore[day];
+    }
+
+    function getScores(scoreCard, template) {
+        for(var day in scoreCard) {
+            var cardInfo = scoreCard[day];
 
             if((typeof cardInfo !== 'undefined') &&
                (typeof cardInfo.score !== 'undefined')) {
-                cardInfo.name = magpiesTemplate.name;
-                cardInfo.in = magpiesTemplate.in;
-                cardInfo.out = magpiesTemplate.out;
-                cardInfo.par = magpiesTemplate.par;
+                cardInfo.name = template.name;
+                cardInfo.in = template.in;
+                cardInfo.out = template.out;
+                cardInfo.par = template.par;
                 var score = cardInfo.score;
                 for(var hole in score) {
                     for(var holeKey in score[hole]) {
-                        $.extend(true, score[hole][holeKey], magpiesTemplate[holeKey]);
+                        $.extend(true, score[hole][holeKey], template[holeKey]);
                     }
 
                 }
@@ -37,7 +40,7 @@ app.service("scoreService", function($rootScope, $http) {
             }
         }
 
-        scoreCards.push({name: magpiesTemplate.name, data: magpiesScore});
+        scoreCards.push({name: template.name, data: scoreCard});
         console.info(scoreCards);
     }
 
@@ -333,7 +336,8 @@ app.service("scoreService", function($rootScope, $http) {
         return strokeyTally;
     };
 
-    getMagpiesScores();
+    getScores(magpiesScore, magpiesTemplate);
+    getScores(mollymookHilltopScore, mollymookHilltopTemplate);
     parseStrokeTally();
 
 

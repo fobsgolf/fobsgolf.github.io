@@ -68,7 +68,7 @@ app.directive('fobsGraph', function() {
                                     }
                                     options.title.text = courseData[card].name;
                                     $scope.chart = new Highcharts.Chart(options);
-
+                                    console.info("should be updating graph data")
                                     for(var s in series) {
                                         $scope.chart.addSeries(series[s]);
                                     }

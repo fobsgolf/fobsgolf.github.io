@@ -1,5 +1,9 @@
 <div class="container">
-    <div ng-repeat="course in scores">
+    <ul class="scrollImages">
+        <li ng-class="getImageClass(course)" ng-repeat="course in scores" ng-click="courseClicked(course)">
+        </li>
+    </ul>
+    <div ng-repeat="course in scores | filter: {name: selectedCourse}">
         <h2>{{course.name}}</h2>
         <div ng-repeat="cardInfo in course.data">
             <div class="panel panel-info">
