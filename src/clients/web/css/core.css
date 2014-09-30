@@ -106,3 +106,15 @@ ul.scrollImages li:last {
     //margin-top: 60px;
     position: relative;
 }
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    text-align: center;
+}
+
+.jumbotron {
+  //text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}

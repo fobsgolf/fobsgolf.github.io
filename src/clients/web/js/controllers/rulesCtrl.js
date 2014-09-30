@@ -1,3 +1,3 @@
-app.controller("rulesCtrl", function($scope) {
+app.controller("rulesCtrl", function($scope, $swipe) {
 
 })
