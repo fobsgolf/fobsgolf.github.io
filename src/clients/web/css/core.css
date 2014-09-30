@@ -12,9 +12,10 @@ body {
 
 .menu-container {
     position: absolute;
-    top: 68px;
-    width: 95%;
+    top: 20px;
+    width: 44px;
     z-index: 950;
+    right: 20px;
 }
 
 .menu-container div {
@@ -23,7 +24,7 @@ body {
 }
 
 .custom-menu {
-    background-color: black;
+    background-color: #333;
     position: relative;
     float: right;
     padding: 9px 10px;
@@ -72,17 +73,36 @@ ul.scrollImages {
     margin: 0;
     padding: 0;
     white-space: nowrap;
-    width: 90%;
+    width: 100%;
     overflow-x: auto;
-    height: 80px;
+    height: 86px;
     z-index: 900;
-    position: relative;
+    position: absolute;
     list-style-type: none;
+    background-color: #222;
+    //top: 52px;
 }
 
 ul.scrollImages li {
     display: inline;
-    width: 150px;
-    height: 150px;
     float: left;
+    border-right: 4px solid #000000;
+}
+
+ul.scrollImages li:last {
+    border-right: none;
+}
+
+.score {
+    position: relative;
+    top: -18px;
+}
+
+.score .scrollImages {
+    position: relative;
+}
+
+.score .container {
+    //margin-top: 60px;
+    position: relative;
 }

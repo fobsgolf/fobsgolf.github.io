@@ -1,8 +1,14 @@
 /*
  * Base structure
  */
+.dashboard {
+    position: relative;
+    top: -18px;
+}
 
-
+.dashboard .scrollImages {
+    position: relative;
+}
 /*
  * Global add-ons
  */

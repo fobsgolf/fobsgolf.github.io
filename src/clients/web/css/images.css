@@ -1,15 +1,21 @@
+.image {
+    margin-top: 3px
+
+
+}
+
 .image.magpies {
     background: url('../images/magpies.jpg');
-    width: 91px;
-    height: 80px;
     display: block;
     background-repeat: no-repeat;
+    width: 95px;
+    height: 80px;
 }
 
 .image.mollymook {
     background: url('../images/mollymookHilltop2.jpg');
-    width: 91px;
-    height: 80px;
     display: block;
     background-repeat: no-repeat;
+    width: 110px;
+    height: 80px;
 }
