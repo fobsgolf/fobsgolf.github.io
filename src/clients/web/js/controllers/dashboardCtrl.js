@@ -20,9 +20,6 @@ app.controller("dashboardCtrl", function($scope, $location, graphService) {
                 ($scope.series[0].data.length > 0 ? $scope.series[0].data[0].date : '') : '';
             $scope.selectedCourse.name = ($scope.series &&
                              ($scope.series.length > 0)) ? $scope.series[0].name : '';
-            console.info("course " + $scope.selectedCourse.name)
-            console.info("date " + $scope.selectedDate);
-            console.info(newVal)
             if($scope.selectedCourse.name !== "") {
                 $scope.courseItem = $scope.series[0];
             }
@@ -31,7 +28,6 @@ app.controller("dashboardCtrl", function($scope, $location, graphService) {
 
     $scope.courseClicked = function(courseObj) {
         $scope.selectedCourse.name = courseObj.name;
-        console.info("image clicked")
         for(var course in $scope.series) {
             if($scope.series[course].name === $scope.selectedCourse.name) {
                 $scope.courseItem = $scope.series[course];
@@ -43,7 +39,6 @@ app.controller("dashboardCtrl", function($scope, $location, graphService) {
     $scope.getImageClass = function(course) {
         var cls = "image ";
         cls += course.name.toLowerCase();
-        console.info("course name " + cls)
         return cls;
     }
 })

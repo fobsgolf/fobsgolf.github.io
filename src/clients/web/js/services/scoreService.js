@@ -41,7 +41,6 @@ app.service("scoreService", function($rootScope, $http) {
         }
 
         scoreCards.push({name: template.name, data: scoreCard});
-        console.info(scoreCards);
     }
 
     function parseCoursePlayer(cardInfo) {
@@ -111,7 +110,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.albatross === 'undefined') {
                 record.albatross= {
                     value: 1,
-                    display: 'Albatross'
+                    display: 'Albatross',
+                    diff: diff
                 };
             }
             else {
@@ -122,7 +122,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.eagle === 'undefined') {
                 record.eagle = {
                     value: 1,
-                    display: 'Eagle'
+                    display: 'Eagle',
+                    diff: diff
                 };
             }
             else {
@@ -133,7 +134,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.birdie === 'undefined') {
                 record.birdie = {
                     value: 1,
-                    display: 'Birdie'
+                    display: 'Birdie',
+                    diff: diff
                 };
             }
             else {
@@ -144,7 +146,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.par === 'undefined') {
                 record.par = {
                     value: 1,
-                    display: 'Par'
+                    display: 'Par',
+                    diff: diff
                 };
             }
             else {
@@ -155,7 +158,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.bogie === 'undefined') {
                 record.bogie = {
                     value: 1,
-                    display: 'Bogie'
+                    display: 'Bogie',
+                    diff: diff
                 };
             }
             else {
@@ -166,7 +170,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.doublebogie === 'undefined') {
                 record.doublebogie = {
                     value: 1,
-                    display: 'Double Bogie'
+                    display: 'Double Bogie',
+                    diff: diff
                 };
             }
             else {
@@ -177,7 +182,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.triplebogie === 'undefined') {
                 record.triplebogie = {
                     value: 1,
-                    display: 'Triple Bogie'
+                    display: 'Triple Bogie',
+                    diff: diff
                 };
             }
             else {
@@ -188,7 +194,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.quadbogie === 'undefined') {
                 record.quadbogie = {
                     value: 1,
-                    display: 'Quad Bogie'
+                    display: 'Quad Bogie',
+                    diff: diff
                 };
             }
             else {
@@ -199,7 +206,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.fiveover === 'undefined') {
                 record.fiveover = {
                     value: 1,
-                    display: '5 Over'
+                    display: '5 Over',
+                    diff: diff
                 };
             }
             else {
@@ -210,7 +218,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.sixover === 'undefined') {
                 record.sixover = {
                     value: 1,
-                    display: '6 Over'
+                    display: '6 Over',
+                    diff: diff
                 };
             }
             else {
@@ -221,7 +230,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.sevenover === 'undefined') {
                 record.sevenover = {
                     value: 1,
-                    display: '7 Over'
+                    display: '7 Over',
+                    diff: diff
                 };
             }
             else {
@@ -232,7 +242,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.eightover === 'undefined') {
                 record.eightover = {
                     value: 1,
-                    display: '8 Over'
+                    display: '8 Over',
+                    diff: diff
                 };
             }
             else {
@@ -243,7 +254,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.nineover === 'undefined') {
                 record.nineover = {
                     value: 1,
-                    display: '9 Over'
+                    display: '9 Over',
+                    diff: diff
                 };
             }
             else {
@@ -254,7 +266,8 @@ app.service("scoreService", function($rootScope, $http) {
             if(typeof record.tenover === 'undefined') {
                 record.tenover = {
                     value: 1,
-                    display: '10 Over'
+                    display: '10 Over',
+                    diff: diff
                 };
             }
             else {
@@ -296,8 +309,6 @@ app.service("scoreService", function($rootScope, $http) {
                 name: courseItem.name,
                 data: []
             }
-            console.info("parse stroke")
-            console.info(courseItem);
             for(var scoreCard in courseItem.data) {
                 var entry = {};
 

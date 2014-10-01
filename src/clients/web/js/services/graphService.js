@@ -67,8 +67,6 @@ app.service("graphService", function($rootScope, scoreService) {
 
         for(var scoreCards in courses) {
             var course = courses[scoreCards];
-            console.info("parseTally")
-            console.info(course);
             var courseTally = {
                 name: course.name,
                 data: []
@@ -84,19 +82,29 @@ app.service("graphService", function($rootScope, scoreService) {
 
                 var categories = [];
                 // Iterate over date, Tuan, Leir, Dat
-                var prop, propRef, cat, catName;
+                var prop, propRef, cat, catName, catDiff;
                 for(prop in course.data[scoreCard]) {
                     propRef = course.data[scoreCard][prop];
                     if(typeof propRef === 'object') {
                         // Iterate over par, bogie, etc
                         for(cat in propRef) {
                             catName = propRef[cat].display;
-                            categories.push(catName);
+                            catDiff = propRef[cat].diff;
+                            var catItem = {
+                                "name": catName,
+                                "diff": catDiff
+                            }
+
+                            categories.push(catItem);
                         }
                     }
                 }
 
-                entry.categories = categories.filter(onlyUnique);
+                var tempCategories = categories.filter(onlyUnique);
+                tempCategories.sort(sortBy('diff', true));
+                for(var catIt in tempCategories) {
+                    entry.categories.push(tempCategories[catIt].name);
+                }
                 // Now create the series
                 // Iterate over date, Tuan, Leir, Dat
                 for(prop in course.data[scoreCard]) {
@@ -128,21 +136,32 @@ app.service("graphService", function($rootScope, scoreService) {
                     }
                 }
                 courseTally.data.push(entry);
-
-                console.info(entry)
             }
             pieStats.push(courseTally);
-            console.info('pushed ')
         }
 
     }
 
     function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
+        var pos = self.map(function(e) { return e.name; }).indexOf(value.name)
+        return pos === index;
     }
 
     methods.getPieStats = function() {
         return pieStats;
+    }
+
+    var sortBy = function(field, reverse, primer){
+
+        var key = primer ?
+            function(x) {return primer(x[field])} :
+        function(x) {return x[field]};
+
+        reverse = [-1, 1][+!!reverse];
+
+        return function (a, b) {
+            return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+        }
     }
 
     return methods;

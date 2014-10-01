@@ -45,19 +45,12 @@ app.directive('fobsGraph', function() {
                 options.legend = {
                     reversed: true
                 };
-
-                options.plotOptions.series = {
-                    stacking: 'normal'
-                };
             }
 
             // todo choose selected course (filterCourse)
             function updateGraph() {
                 if($scope.series.length > 0) {
                     for(var course in $scope.series) {
-                        console.info("graph widget")
-                        console.info($scope.series[course])
-                        console.info("filter course " + $scope.filterCourse.name)
                         if($scope.series[course].name === $scope.filterCourse.name) {
                             var courseData = $scope.series[course].data;
                             for(var card in courseData) {
@@ -65,10 +58,18 @@ app.directive('fobsGraph', function() {
                                     var series = courseData[card].series;
                                     options.xAxis = {
                                         categories: courseData[card].categories
+
+                                    }
+                                    options.yAxis = {
+                                        title: {
+                                            text: ""
+                                        }
+                                    }
+                                    options.credits = {
+                                        enabled: false
                                     }
                                     options.title.text = courseData[card].name;
                                     $scope.chart = new Highcharts.Chart(options);
-                                    console.info("should be updating graph data")
                                     for(var s in series) {
                                         $scope.chart.addSeries(series[s]);
                                     }
@@ -88,14 +89,12 @@ app.directive('fobsGraph', function() {
             $scope.$watch('filterDate', function(newVal, oldVal) {
                 if((typeof newVal !== 'undefined') &&
                    (newVal !== oldVal)) {
-                    console.info("filter date changed")
                     updateGraph();
                 }
             });
 
             $scope.$watch('filterCourse', function(newVal, oldVal) {
                 if((typeof newVal !== 'undefined') ) {
-                    console.info("graph widget course " + newVal.name)
                     updateGraph();
                 }
             }, true);
