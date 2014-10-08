@@ -5,60 +5,89 @@
     </ul>
     <div class="container">
         <div ng-repeat="course in scores | filter: {name: selectedCourse}">
-            <h2>{{course.name}}</h2>
-            <div ng-repeat="cardInfo in course.data">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="panel-title">{{cardInfo.date * 1000| date:'dd-MM-yyyy HH:mm:ss'}}</div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <h2 >{{course.name}}</h2>
+                </div>
+                <div class="col-xs-1 col-xs-offset-7" ng-click="toggleOutput()">
+                    <div class="image" ng-class="getResultClass()">
                     </div>
-                    <div class="panel-body">
-                        <div ng-switch="cardInfo.summary" ng-click="viewSwitch(cardInfo)">
-                            <div ng-switch-when="true">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Par</th>
-                                            <th ng-repeat="player in cardInfo.players">{{player}}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                {{cardInfo.par}}
-                                            </td>
-                                            <td ng-repeat="player in cardInfo.players">
-                                                {{getPlayerTotal(player, cardInfo)}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div ng-switch-default>
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Hole</th>
-                                            <th>Par</th>
-                                            <th>Index</th>
-                                            <th ng-repeat="player in cardInfo.players">{{player}}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="score in cardInfo.score | orderBy:getScoreOrder">
-                                            <td>{{getHole(score)}}</td>
-                                            <td>{{getPar(score)}}</td>
-                                            <td>{{getIndex(score)}}</td>
-                                            <td ng-repeat="player in cardInfo.players">
-                                                {{getPlayersScore(score, player)}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                </div>
+            </div>
+
+            <div ng-switch="resultType">
+                <div ng-switch-when="table" ng-repeat="cardInfo in course.data">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title">{{cardInfo.date * 1000| date:'dd-MM-yyyy HH:mm:ss'}}</div>
+                        </div>
+                        <div class="panel-body">
+                            <div ng-switch="cardInfo.summary" ng-click="viewSwitch(cardInfo)">
+                                <div ng-switch-when="true">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Par</th>
+                                                <th ng-repeat="player in cardInfo.players">{{player}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    {{cardInfo.par}}
+                                                </td>
+                                                <td ng-repeat="player in cardInfo.players">
+                                                    {{getPlayerTotal(player, cardInfo)}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div ng-switch-default>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Hole</th>
+                                                <th>Par</th>
+                                                <th>Index</th>
+                                                <th ng-repeat="player in cardInfo.players">{{player}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="score in cardInfo.score | orderBy:getScoreOrder">
+                                                <td>{{getHole(score)}}</td>
+                                                <td>{{getPar(score)}}</td>
+                                                <td>{{getIndex(score)}}</td>
+                                                <td ng-repeat="player in cardInfo.players">
+                                                    {{getPlayersScore(score, player)}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!--<div class="gridStyle" ng-grid="gridOptions"></div>-->
+                </div> <!-- end table -->
+                <div ng-switch-when="chart" ng-repeat="cardInfo in course.data">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title">{{cardInfo.date * 1000| date:'dd-MM-yyyy HH:mm:ss'}}</div>
+                        </div>
+                        <div class="panel-body">
+                            <fobs-graph
+                                        type="bar"
+                                        id={{cardInfo.date}}
+                                        class="img-responsive"
+                                        series="series"
+                                        filter-date=cardInfo.date
+                                        filter-course=cardInfo.name
+                                        >
+                            </fobs-graph>
+                        </div>
+                    </div>
                 </div>
-                <!--<div class="gridStyle" ng-grid="gridOptions"></div>-->
             </div>
         </div>
     </div>

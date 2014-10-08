@@ -11,6 +11,7 @@ app.directive('fobsGraph', function() {
             filterCourse: '='
         },
         controller: function($scope) {
+            console.info("graph id " + $scope.id)
             var options = {
                 chart: {
                     plotBackgroundColor: null,
@@ -20,7 +21,7 @@ app.directive('fobsGraph', function() {
                     type: $scope.type
                 },
                 title: {
-                    text: 'massive'
+                    text: ''
                 },
                 tooltip: {
                     //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -51,7 +52,9 @@ app.directive('fobsGraph', function() {
             function updateGraph() {
                 if($scope.series.length > 0) {
                     for(var course in $scope.series) {
-                        if($scope.series[course].name === $scope.filterCourse.name) {
+                        console.info("updateGraph course name " + $scope.series[course].name)
+                        console.info("updateGraph filter course name  " + $scope.filterCourse)
+                        if($scope.series[course].name === $scope.filterCourse) {
                             var courseData = $scope.series[course].data;
                             for(var card in courseData) {
                                 if(courseData[card].date === $scope.filterDate) {
@@ -68,7 +71,11 @@ app.directive('fobsGraph', function() {
                                     options.credits = {
                                         enabled: false
                                     }
-                                    options.title.text = courseData[card].name;
+
+                                    if($scope.title === "true") {
+                                        options.title.text = courseData[card].name;
+                                    }
+
                                     $scope.chart = new Highcharts.Chart(options);
                                     for(var s in series) {
                                         $scope.chart.addSeries(series[s]);

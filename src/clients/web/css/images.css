@@ -1,7 +1,6 @@
 .image {
-    margin-top: 3px
-
-
+    margin-top: 3px;
+    position: relative;
 }
 
 .image.magpies {
@@ -18,4 +17,22 @@
     background-repeat: no-repeat;
     width: 110px;
     height: 80px;
+}
+
+.image.table {
+    background: url('../images/table-32x32.png');
+    display: block;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 63px;
+    top: 17px;
+}
+
+.image.chart {
+    background: url('../images/barchart-32x32.png');
+    display: block;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 63px;
+    top: 17px;
 }

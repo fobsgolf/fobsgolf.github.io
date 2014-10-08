@@ -1,7 +1,9 @@
-app.controller("scoreCtrl", function($scope, scoreService) {
+app.controller("scoreCtrl", function($scope, scoreService, graphService) {
     $scope.scores = scoreService.getScore();
     $scope.summary = true;
     $scope.selectedCourse = 'Magpies';
+    $scope.resultType = "table";
+    $scope.series = graphService.getPieStats();
 
     /*$scope.gridOptions = {data: 'registry.list',
                         columnDefs: [{field: "fname", displayName: "First Name"},
@@ -83,5 +85,24 @@ app.controller("scoreCtrl", function($scope, scoreService) {
         console.info("course name " + cls)
         return cls;
     }
+
+    $scope.toggleOutput = function() {
+        if($scope.resultType === "table") {
+            $scope.resultType = "chart";
+        }
+        else {
+            $scope.resultType = "table";
+        }
+    }
+
+    $scope.getResultClass = function() {
+        if($scope.resultType === "table") {
+            return "chart";
+        }
+
+        return "table";
+
+    }
+
 
 });
